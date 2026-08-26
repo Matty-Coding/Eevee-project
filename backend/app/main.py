@@ -14,7 +14,6 @@ from app.pokemon.routes import router as pokemon_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print(settings.PRODUCTION)
     # Initialize tables on supabase if doesn't exist
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
