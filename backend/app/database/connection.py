@@ -18,10 +18,6 @@ POSTGRES_DATABASE_URL = URL.create(
 engine = create_async_engine(
     POSTGRES_DATABASE_URL if settings.PRODUCTION else settings.DATABASE_URL,
     echo=False,  # avoid logging all statements
-    connect_args={
-        "statement_cache_size": 0,
-        "prepared_statement_cache_size": 0,
-    },
 )
 
 # async session
