@@ -30,6 +30,7 @@ async def lifespan(app: FastAPI):
             # Stampa le tabelle rilevate prima di crearle
             print(
                 f"Tabelle registrate in metadata: {list(Base.metadata.tables.keys())}")
+            print(f"DEBUG DB CONNECTED TO: {engine.url.host} / DB: {engine.url.database}")
             await conn.run_sync(Base.metadata.create_all)
             print("Tabelle create con successo su Supabase.")
     except Exception as e:
