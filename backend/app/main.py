@@ -12,33 +12,17 @@ from app.auth.routes import router as auth_router
 from app.pokemon.routes import router as pokemon_router
 
 
-# @asynccontextmanager
-# async def lifespan(app: FastAPI):
-
-#     # Initialize tables on supabase if doesn't exist
-#     async with engine.begin() as conn:
-#         await conn.run_sync(Base.metadata.create_all)
-#     yield
-
-#     # Close the connection
-#     await engine.dispose()
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    try:
-        async with engine.begin() as conn:
-            # Stampa le tabelle rilevate prima di crearle
-            print(
-                f"Tabelle registrate in metadata: {list(Base.metadata.tables.keys())}")
-            print(f"DEBUG DB CONNECTED TO: {engine.url.host} / DB: {engine.url.database}")
-            await conn.run_sync(Base.metadata.create_all)
-            print("Tabelle create con successo su Supabase.")
-    except Exception as e:
-        print(f"Errore durante la creazione delle tabelle: {e}")
-
+    print(settings.PRODUCTION)
+    # Initialize tables on supabase if doesn't exist
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
     yield
 
+    # Close the connection
     await engine.dispose()
+
 
 # auth token in Dependencies
 security = HTTPBearer()
