@@ -1,8 +1,8 @@
 from fastapi.security import HTTPBearer
+from app.core.config import settings
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.core.config import settings
 from app.database.connection import engine, Base
 from app.core.limiter import custom_rate_limit_handler, limiter
 from slowapi.errors import RateLimitExceeded
