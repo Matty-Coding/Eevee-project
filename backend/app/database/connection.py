@@ -4,12 +4,19 @@ from app.core.config import settings
 
 
 # =========  PRODUCTION  ==========
-# from sqlalchemy import URL
-# DATABASE_URL = URL.create()
+from sqlalchemy import URL
+POSTGRES_DATABASE_URL = URL.create(
+    drivername="postgresql+asyncpg",
+    username=settings.POSTGRES_USER,
+    password=settings.POSTGRES_PASSWORD,
+    host=settings.POSTGRES_HOST,
+    port=settings.POSTGRES_PORT,
+    database=settings.POSTGRES_DATABASE
+)
 
 # database async engine
 engine = create_async_engine(
-    settings.DATABASE_URL,
+    POSTGRES_DATABASE_URL if settings.PRODUCTION else settings.DATABASE_URL,
     echo=False  # avoid logging all statements
 )
 

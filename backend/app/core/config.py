@@ -14,7 +14,13 @@ class Settings(BaseSettings):
 
     PRODUCTION: bool
 
-    ALLOWED_HOSTS: list[str] = []
+    POSTGRES_HOST: str
+    POSTGRES_USER: str
+    POSTGRES_PORT: int
+    POSTGRES_PASSWORD: str
+    POSTGRES_DATABASE: str
+
+    ALLOWED_HOSTS: list[str] = ["*"]
 
     # security
     SECRET_KEY: str
@@ -31,7 +37,7 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def set_allowed_hosts(self):
-        self.ALLOWED_HOSTS = [self.FRONTEND_URL]
+        self.ALLOWED_HOSTS.append(self.FRONTEND_URL)
         return self
 
     model_config = SettingsConfigDict(
